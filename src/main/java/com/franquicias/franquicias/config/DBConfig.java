@@ -2,34 +2,20 @@ package com.franquicias.franquicias.config;
 
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
-import org.springframework.r2dbc.connection.init.CompositeDatabasePopulator;
-import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
-import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
+import org.springframework.r2dbc.connection.R2dbcTransactionManager;
+import org.springframework.transaction.ReactiveTransactionManager;
 
-@Configuration
-@Slf4j
-public class DBConfig extends AbstractR2dbcConfiguration {
-
-    @Value("${spring.r2dbc.url}")
-    private String dbURL;
-    @Override
+public class DBConfig {
+    @Bean
     public ConnectionFactory connectionFactory() {
-        return ConnectionFactories.get(dbURL);
+        return ConnectionFactories.get(
+                "r2dbc:mysql://admin:Tonyyzoe23972@franquicias-db.c90kykg8ycbp.us-east-2.rds.amazonaws.com:3306/franquicias_database"
+        );
     }
 
     @Bean
-    public ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
-        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
-        initializer.setConnectionFactory(connectionFactory);
-        CompositeDatabasePopulator populator = new CompositeDatabasePopulator();
-        populator.addPopulators(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
-        initializer.setDatabasePopulator(populator);
-        return initializer;
+    public ReactiveTransactionManager transactionManager(ConnectionFactory connectionFactory) {
+        return new R2dbcTransactionManager(connectionFactory);
     }
 }
