@@ -1,10 +1,10 @@
 package com.franquicias.franquicias.repository;
 
-import com.franquicias.franquicias.entity.Franquicia;
+import com.franquicias.franquicias.entity.Franchise;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FranquiciaRepository extends ReactiveCrudRepository<Franquicia, Long> {
+public interface FranchiseRepository extends ReactiveCrudRepository<Franchise, Long> {
 
 }

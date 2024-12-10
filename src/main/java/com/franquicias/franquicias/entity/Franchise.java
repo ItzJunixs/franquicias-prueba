@@ -10,16 +10,13 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table
+@Table(name = "franchises")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Franquicia {
+public class Franchise {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Sucursal> branches = new ArrayList<>();
+    private List<Branch> branches = new ArrayList<>();
 }
