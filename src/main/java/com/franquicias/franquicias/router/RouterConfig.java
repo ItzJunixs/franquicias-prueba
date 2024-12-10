@@ -10,24 +10,26 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
+
 @Configuration
 @Slf4j
 public class RouterConfig {
     @Bean
-    public RouterFunction<ServerResponse> routes(
-            FranchiseHandler franchiseHandler,
-            BranchHandler branchHandler,
-            ProductHandler productHandler) {
-        return RouterFunctions.route()
-                .POST("/api/franchises", franchiseHandler::addFranchise)
-                .POST("/api/franchises/{franchiseId}/branches", branchHandler::addBranch)
-                .POST("/api/franchises/{franchiseId}/branches/{branchName}/products", productHandler::addProduct)
-                .DELETE("/api/products/{productId}", productHandler::deleteProduct)
-                .PUT("/api/products/{productId}/stock", productHandler::updateStock)
-                .GET("/api/branches/{branchId}/max-stock-product", productHandler::getMaxStockProduct)
-                .PUT("/api/franchises/{franchiseId}/name", franchiseHandler::updateFranchiseName)
-                .PUT("/api/branches/{branchId}/name", branchHandler::updateBranchName)
-                .PUT("/api/products/{productId}/name", productHandler::updateProductName)
-                .build();
+    public RouterFunction<ServerResponse> route(FranchiseHandler franchiseHandler,
+                                                BranchHandler branchHandler,
+                                                ProductHandler productHandler) {
+        return RouterFunctions
+                .route(POST("/franchises"), franchiseHandler::addFranchise)
+                .andRoute(PUT("/franchises/{id}/name"), franchiseHandler::updateFranchiseName)
+                .andRoute(GET("/franchises/{id}"), franchiseHandler::getFranchiseById)
+                .andRoute(POST("/branches"), branchHandler::addBranch)
+                .andRoute(PUT("/branches/{id}/name"), branchHandler::updateBranchName)
+                .andRoute(GET("/branches/{franchiseId}"), branchHandler::getBranchesByFranchiseId)
+                .andRoute(POST("/products"), productHandler::addProduct)
+                .andRoute(PUT("/products/{id}/stock"), productHandler::updateProductStock)
+                .andRoute(DELETE("/products/{id}"), productHandler::deleteProduct)
+                .andRoute(GET("/products/max-stock/{branchId}"), productHandler::getMaxStockProduct)
+                .andRoute(PUT("/products/{id}/name"), productHandler::updateProductName);
     }
 }

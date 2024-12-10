@@ -10,47 +10,45 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class ProductHandler {
     private final ProductService productService;
 
-    public Mono<ServerResponse> addProduct(ServerRequest request) {
-        Long franchiseId = Long.parseLong(request.pathVariable("franchiseId"));
-        String branchName = request.pathVariable("branchName");
+    public ProductHandler(ProductService productService) {
+        this.productService = productService;
+    }
 
+    public Mono<ServerResponse> addProduct(ServerRequest request) {
         return request.bodyToMono(Product.class)
-                .flatMap(product -> productService.addProductToBranch(franchiseId, branchName, product))
+                .flatMap(productService::addProduct)
+                .flatMap(product -> ServerResponse.ok().bodyValue(product));
+    }
+
+    public Mono<ServerResponse> updateProductStock(ServerRequest request) {
+        Long productId = Long.valueOf(request.pathVariable("id"));
+        return request.bodyToMono(Long.class)
+                .flatMap(newStock -> productService.updateProductStock(productId, newStock))
                 .flatMap(product -> ServerResponse.ok().bodyValue(product));
     }
 
     public Mono<ServerResponse> deleteProduct(ServerRequest request) {
-        Long productId = Long.parseLong(request.pathVariable("productId"));
-
+        Long productId = Long.valueOf(request.pathVariable("id"));
         return productService.deleteProduct(productId)
                 .then(ServerResponse.noContent().build());
     }
 
-    public Mono<ServerResponse> updateStock(ServerRequest request) {
-        Long productId = Long.parseLong(request.pathVariable("productId"));
-        return request.bodyToMono(Integer.class)
-                .flatMap(newStock -> productService.updateStock(productId, newStock))
-                .flatMap(product -> ServerResponse.ok().bodyValue(product));
-    }
-
     public Mono<ServerResponse> getMaxStockProduct(ServerRequest request) {
-        Long branchId = Long.parseLong(request.pathVariable("branchId"));
-
-        return productService.findMaxStockProductByBranch(branchId)
+        Long branchId = Long.valueOf(request.pathVariable("branchId"));
+        return productService.getMaxStockProduct(branchId)
                 .flatMap(product -> ServerResponse.ok().bodyValue(product))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> updateProductName(ServerRequest request) {
-        Long productId = Long.parseLong(request.pathVariable("productId"));
-
+        Long productId = Long.valueOf(request.pathVariable("id"));
         return request.bodyToMono(String.class)
                 .flatMap(newName -> productService.updateProductName(productId, newName))
-                .flatMap(product -> ServerResponse.ok().bodyValue(product));
+                .flatMap(product -> ServerResponse.ok().bodyValue(product))
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

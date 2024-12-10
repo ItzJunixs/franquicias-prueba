@@ -5,30 +5,29 @@ import com.franquicias.franquicias.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
-    private final BranchService branchService;
 
-    public Mono<Product> addProductToBranch(Long franchiseId, String branchName, Product product) {
-        return branchService.findBranchByName(franchiseId, branchName)
-                .flatMap(branch -> {
-                    product.setBranch(branch);
-                    return productRepository.save(product);
-                });
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public Mono<Void> deleteProduct(Long productId) {
-        return productRepository.deleteById(productId);
+    public Mono<Product> addProduct(Product product) {
+        return productRepository.save(product);
     }
 
-    public Mono<Product> updateStock(Long productId, int newStock) {
+    public Mono<Void> deleteProduct(Long id) {
+        return productRepository.deleteById(id);
+    }
+
+    public Mono<Product> updateProductStock(Long productId, Long newStock) {
         return productRepository.findById(productId)
                 .flatMap(product -> {
                     product.setStock(newStock);
@@ -36,9 +35,13 @@ public class ProductService {
                 });
     }
 
-    public Mono<Product> findMaxStockProductByBranch(Long branchId) {
-        return productRepository.findAllByBranchId(branchId)
-                .sort(Comparator.comparingInt(Product::getStock).reversed())
+    public Flux<Product> getProductsByBranchId(Long branchId) {
+        return productRepository.findByBranchId(branchId);
+    }
+
+    public Mono<Product> getMaxStockProduct(Long branchId) {
+        return productRepository.findByBranchId(branchId)
+                .sort((p1, p2) -> Long.compare(p2.getStock(), p1.getStock()))
                 .next();
     }
 

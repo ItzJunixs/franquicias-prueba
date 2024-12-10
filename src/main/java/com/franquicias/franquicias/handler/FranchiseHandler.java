@@ -10,10 +10,13 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class FranchiseHandler {
     private final FranchiseService franchiseService;
+
+    public FranchiseHandler(FranchiseService franchiseService) {
+        this.franchiseService = franchiseService;
+    }
 
     public Mono<ServerResponse> addFranchise(ServerRequest request) {
         return request.bodyToMono(Franchise.class)
@@ -22,10 +25,16 @@ public class FranchiseHandler {
     }
 
     public Mono<ServerResponse> updateFranchiseName(ServerRequest request) {
-        Long franchiseId = Long.parseLong(request.pathVariable("franchiseId"));
-
+        Long franchiseId = Long.valueOf(request.pathVariable("id"));
         return request.bodyToMono(String.class)
                 .flatMap(newName -> franchiseService.updateFranchiseName(franchiseId, newName))
                 .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise));
+    }
+
+    public Mono<ServerResponse> getFranchiseById(ServerRequest request) {
+        Long franchiseId = Long.valueOf(request.pathVariable("id"));
+        return franchiseService.findById(franchiseId)
+                .flatMap(franchise -> ServerResponse.ok().bodyValue(franchise))
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

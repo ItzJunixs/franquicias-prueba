@@ -10,24 +10,31 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class BranchHandler {
     private final BranchService branchService;
 
+    public BranchHandler(BranchService branchService) {
+        this.branchService = branchService;
+    }
+
     public Mono<ServerResponse> addBranch(ServerRequest request) {
-        Long franchiseId = Long.parseLong(request.pathVariable("franchiseId"));
         return request.bodyToMono(Branch.class)
-                .flatMap(branch -> branchService.addBranchToFranchise(franchiseId, branch))
+                .flatMap(branchService::addBranch)
                 .flatMap(branch -> ServerResponse.ok().bodyValue(branch));
     }
 
     public Mono<ServerResponse> updateBranchName(ServerRequest request) {
-        Long branchId = Long.parseLong(request.pathVariable("branchId"));
-
+        Long branchId = Long.valueOf(request.pathVariable("id"));
         return request.bodyToMono(String.class)
                 .flatMap(newName -> branchService.updateBranchName(branchId, newName))
                 .flatMap(branch -> ServerResponse.ok().bodyValue(branch));
     }
 
+    public Mono<ServerResponse> getBranchesByFranchiseId(ServerRequest request) {
+        Long franchiseId = Long.valueOf(request.pathVariable("franchiseId"));
+        return branchService.getBranchesByFranchiseId(franchiseId)
+                .collectList()
+                .flatMap(branches -> ServerResponse.ok().bodyValue(branches));
+    }
 }
