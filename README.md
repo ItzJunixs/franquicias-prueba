@@ -26,7 +26,7 @@ A continuación comparto las credenciales por si deseas realizar una conexión e
 - {USUARIO}: admin
 - {CONTRASEÑA}: Tonyyzoe23972
 
-*Imagen de referencia*
+*Imagen de referencia (En este caso yo utiizo DBeaver)*
 ![img_1.png](img_1.png)
 
 ## Para correr desde docker
@@ -35,8 +35,7 @@ A continuación comparto las credenciales por si deseas realizar una conexión e
 Nota: Es importante el punto al final (.)
 
 
-## Utiliza Postman por ejemplo, para probar los endpoints que te compartiré a continuación.
+## Utiliza Postman o tu herramienta de preferencia para probar los endpoints (en el paquete resources encuentras la colección postman).
 
-[Accenture - Prueba.postman_collection.json](..%2F..%2FDownloads%2FAccenture%20-%20Prueba.postman_collection.json)
-   
+ 
    
