@@ -20,11 +20,11 @@ Este proyecto es una app para gestionar franquicias y sucursales. Se desarrolló
 
 Nota: No te preocupes por el application.properties, ya está configurada la conexión para que se conecte a una RDS.
 A continuación comparto las credenciales por si deseas realizar una conexión en tu gestor de base de datos:
-- {HOST}: franquicias-db.c90kykg8ycbp.us-east-2.rds.amazonaws.com
+- {HOST}: my_host
 - {PUERTO}: 3306
 - {NOMBRE_DATABASE}: franquicias_database
 - {USUARIO}: admin
-- {CONTRASEÑA}: Tonyyzoe23972
+- {CONTRASEÑA}: mypassword
 
 *Imagen de referencia*
 ![img_1.png](img_1.png)

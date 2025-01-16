@@ -10,7 +10,7 @@ public class DBConfig {
     @Bean
     public ConnectionFactory connectionFactory() {
         return ConnectionFactories.get(
-                "r2dbc:mysql://admin:Tonyyzoe23972@franquicias-db.c90kykg8ycbp.us-east-2.rds.amazonaws.com:3306/franquicias_database"
+                "r2dbc:mysql://conection"
         );
     }
 

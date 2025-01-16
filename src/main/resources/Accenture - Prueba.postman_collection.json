@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "538932c9-b080-4e17-aac0-fea33dba314c",
+		"name": "Accenture - Prueba",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21447043"
+	},
+	"item": [
+		{
+			"name": "Agregar una nueva franquicia",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Franquicia Ejemplo 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/franchises",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"franchises"
+					]
+				},
+				"description": "Generated from cURL: curl --request POST \\\r\n  --url http://localhost:8080/franchises \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '{\r\n\t\"name\": \"Franquicia Ejemplo\"\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar nueva sucursal a una franquicia",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Sucursal Ejemplo F\",\r\n\t\"franchiseId\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/branches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches"
+					]
+				},
+				"description": "Generated from cURL: curl --request POST \\\r\n  --url http://localhost:8080/branches \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '{\r\n\t\"name\": \"Sucursal Ejemplo\",\r\n\t\"franchiseId\": 1\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar nuevo producto a una sucursal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Producto Ejemplo 9\",\r\n    \"stock\": 3500,\r\n    \"branchId\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Generated from cURL: curl --request POST \\\r\n  --url http://localhost:8080/products \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '{\r\n    \"name\": \"Producto Ejemplo\",\r\n    \"stock\": 100,\r\n    \"branchId\": 1\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un nuevo producto a una sucursal",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"9"
+					]
+				},
+				"description": "Generated from cURL: curl --request DELETE \\\r\n  --url http://localhost:8080/products/1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar el stock de un producto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "1500",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/1/stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"stock"
+					]
+				},
+				"description": "Generated from cURL: curl --request PUT \\\r\n  --url http://localhost:8080/products/1/stock \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '1000'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener el producto con el máximo stock de una sucursal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/max-stock/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"max-stock",
+						"2"
+					]
+				},
+				"description": "Generated from cURL: curl --request GET \\\r\n  --url http://localhost:8080/products/max-stock/1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar el nombre de una franquicia",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "Nuevo Nombre de Franquicia",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/franchises/1/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"franchises",
+						"1",
+						"name"
+					]
+				},
+				"description": "Generated from cURL: curl --request PUT \\\r\n  --url http://localhost:8080/franchises/1/name \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '\"Nuevo Nombre de Franquicia\"'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar el nombre de una sucursal",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "Nuevo Nombre de Sucursal",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/branches/1/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches",
+						"1",
+						"name"
+					]
+				},
+				"description": "Generated from cURL: curl --request PUT \\\r\n  --url http://localhost:8080/branches/1/name \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '\"Nuevo Nombre de Sucursal\"'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar el nombre de un producto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "Nuevo Nombre de Producto",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/1/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"name"
+					]
+				},
+				"description": "Generated from cURL: curl --request PUT \\\r\n  --url http://localhost:8080/products/1/name \\\r\n  --header 'Content-Type: application/json' \\\r\n  --data '\"Nuevo Nombre de Producto\"'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una franquicia por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/franchises/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"franchises",
+						"1"
+					]
+				},
+				"description": "Generated from cURL: curl --request GET \\\r\n  --url http://localhost:8080/franchises/1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las sucursales de una franquicia",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/branches/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches",
+						"1"
+					]
+				},
+				"description": "Generated from cURL: curl --request GET \\\r\n  --url http://localhost:8080/branches/1\r\n"
+			},
+			"response": []
+		}
+	]
+}
